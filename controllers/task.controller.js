@@ -14,13 +14,21 @@ module.exports.index = async(req, res) => {
     }
     //pagination
     const pagination = {
-        limit: 2,
+        limit: 5,
         currentPage: 1
     }
     if(req.query.page){
         pagination.currentPage = parseInt(req.query.page)
     }
+    if(req.query.limit){
+        pagination.limit = parseInt(req.query.limit)
+    }
     pagination.skip = (pagination.currentPage - 1) * (pagination.limit)
+    //keyword
+    if(req.query.keyword){
+        const regex = new RegExp(req.query.keyword, "i")
+        find.title = regex
+    }
     const tasks = await Task.find(find).sort(sort).skip(pagination.skip).limit(pagination.limit)
     res.json(tasks)
 }
