@@ -3,14 +3,25 @@ module.exports.index = async(req, res) => {
     const find = {
         deleted: false
     }
+    //filters
     if(req.query.status){
         find.status = req.query.status
     }
+    //sort
     const sort = {}
     if(req.query.sortKey && req.query.sortValue){
         sort[req.query.sortKey] = req.query.sortValue
     }
-    const tasks = await Task.find(find).sort(sort)
+    //pagination
+    const pagination = {
+        limit: 2,
+        currentPage: 1
+    }
+    if(req.query.page){
+        pagination.currentPage = parseInt(req.query.page)
+    }
+    pagination.skip = (pagination.currentPage - 1) * (pagination.limit)
+    const tasks = await Task.find(find).sort(sort).skip(pagination.skip).limit(pagination.limit)
     res.json(tasks)
 }
 module.exports.detail = async(req, res) => {
