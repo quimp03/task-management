@@ -1,9 +1,11 @@
 const express = require("express")
 const Task = require("../../model/task.model")
 const controller = require("../../controllers/task.controller")
+const validate = require("../../validate/task.valiadte")
 const router = express()
 router.get("/", controller.index)
 router.get("/detail/:id", controller.detail)
 router.patch("/change-status/:id", controller.changeStatusPatch)
 router.patch("/change-multi", controller.changeMultiPatch)
+router.post("/create",validate, controller.create)
 module.exports = router

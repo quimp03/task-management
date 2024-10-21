@@ -88,3 +88,12 @@ module.exports.changeMultiPatch = async(req, res) => {
     })
   }
 }
+module.exports.create = async(req, res) => {
+  const task = new Task(req.body)
+  await task.save()
+  res.json({
+    task,
+    code: "400",
+    message: "Thêm công việc thành công"
+  })
+}
