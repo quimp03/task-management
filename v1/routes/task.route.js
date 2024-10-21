@@ -9,4 +9,5 @@ router.patch("/change-status/:id", controller.changeStatusPatch)
 router.patch("/change-multi", controller.changeMultiPatch)
 router.post("/create",validate, controller.create)
 router.patch("/edit/:id", controller.editPatch)
+router.patch("/delete/:id", controller.deletePatch)
 module.exports = router

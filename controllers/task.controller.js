@@ -107,3 +107,16 @@ module.exports.editPatch = async(req, res) => {
     message: "Chỉnh sửa công việc thành công!"
   })
 }
+module.exports.deletePatch = async(req, res) => {
+  const id = req.params.id
+  await Task.updateOne({
+    _id: id
+  }, {
+    deleted: true,
+    deletedAt: new Date()
+  })
+  res.json({
+    code: "400",
+    message: "Xóa công việc thành công!"
+  })
+}
