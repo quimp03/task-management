@@ -14,7 +14,7 @@ module.exports.index = async(req, res) => {
     }
     //pagination
     const pagination = {
-        limit: 5,
+        limit: 10,
         currentPage: 1
     }
     if(req.query.page){
@@ -95,5 +95,15 @@ module.exports.create = async(req, res) => {
     task,
     code: "400",
     message: "Thêm công việc thành công"
+  })
+}
+module.exports.editPatch = async(req, res) => {
+  const id = req.params.id
+  await Task.updateOne({
+    _id: id
+  }, req.body)
+  res.json({
+    code: "400",
+    message: "Chỉnh sửa công việc thành công!"
   })
 }
