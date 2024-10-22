@@ -93,7 +93,7 @@ module.exports.create = async(req, res) => {
   await task.save()
   res.json({
     task,
-    code: "400",
+    code: 200,
     message: "Thêm công việc thành công"
   })
 }
@@ -103,7 +103,7 @@ module.exports.editPatch = async(req, res) => {
     _id: id
   }, req.body)
   res.json({
-    code: "400",
+    code: 200,
     message: "Chỉnh sửa công việc thành công!"
   })
 }
@@ -116,7 +116,7 @@ module.exports.deletePatch = async(req, res) => {
     deletedAt: new Date()
   })
   res.json({
-    code: "400",
+    code: 200,
     message: "Xóa công việc thành công!"
   })
 }
@@ -128,7 +128,7 @@ module.exports.deleteMultiPatch = async(req, res) => {
     deleted: true
   })
   res.json({
-    code: "400",
+    code: 200,
     message: "Cập nhật trạng thái các công việc thành công!"
   })
 }
