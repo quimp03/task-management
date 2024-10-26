@@ -140,3 +140,10 @@ module.exports.reset = async(req, res) => {
     })
     res.send("Ok")
 }
+module.exports.detail = async(req, res) => {
+    res.json({
+        code: 200,
+        message: "Thành công!",
+        user: res.locals.user
+    })
+}
