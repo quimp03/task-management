@@ -1,6 +1,11 @@
 const Task = require("../model/task.model")
 module.exports.index = async(req, res) => {
+    const userId = res.locals.user.id
     const find = {
+      $or: [
+        {createdBy: userId},
+        {listUser: userId}
+      ],
         deleted: false
     }
     //filters
@@ -30,7 +35,11 @@ module.exports.index = async(req, res) => {
         find.title = regex
     }
     const tasks = await Task.find(find).sort(sort).skip(pagination.skip).limit(pagination.limit)
-    res.json(tasks)
+    res.json({
+      code: 200,
+      message: "Thành công",
+      tasks
+    })
 }
 module.exports.detail = async(req, res) => {
     const id = req.params.id
@@ -90,9 +99,10 @@ module.exports.changeMultiPatch = async(req, res) => {
 }
 module.exports.create = async(req, res) => {
   const task = new Task(req.body)
+  task.createdBy = res.locals.user.id
   await task.save()
+  
   res.json({
-    task,
     code: 200,
     message: "Thêm công việc thành công"
   })

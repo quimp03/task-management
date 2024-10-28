@@ -147,3 +147,14 @@ module.exports.detail = async(req, res) => {
         user: res.locals.user
     })
 }
+module.exports.list = async(req, res) => {
+    const users = await User.find({
+        deleted: false
+    }).select("fullName email")
+    res.status(200).json({
+        code: 200,
+        message: "Danh sách các người dùng",
+        users: users
+    })
+}
+
