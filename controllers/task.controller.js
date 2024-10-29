@@ -98,14 +98,29 @@ module.exports.changeMultiPatch = async(req, res) => {
   }
 }
 module.exports.create = async(req, res) => {
-  const task = new Task(req.body)
-  task.createdBy = res.locals.user.id
-  await task.save()
-  
-  res.json({
-    code: 200,
-    message: "Thêm công việc thành công"
-  })
+  try {
+    req.body.createdBy = res.locals.user.id
+    if(req.body.taskParentId){
+      const idParent = await Task.findOne({
+        _id: req.body.taskParentId
+      })
+      if(!idParent){
+        res.json({
+          code: 400,
+          message: "Id parent không tồn tại!"
+        })
+        return
+      }
+    }
+      const task = new Task(req.body)
+      await task.save()
+      res.json({
+        code: 200,
+        message: "Thêm công việc thành công"
+      })
+  } catch (error) {
+    res.json(error)
+  }
 }
 module.exports.editPatch = async(req, res) => {
   const id = req.params.id
